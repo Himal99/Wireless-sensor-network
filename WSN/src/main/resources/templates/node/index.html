@@ -1,0 +1,124 @@
+<div th:replace="shared/header"></div>
+<div class="container-fluid">
+   <div class=" pull-left">
+
+                    <button type="button" id="create-node" class="btn btn-success">Create Node</button>
+                     <a href="/relation" class="btn btn-primary">Make a connection</a>
+                    
+      </div>
+</div>
+
+<br>
+<div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">NODES INFORMATION</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered table-hover table-striped">
+                  <thead><tr>
+                        <th>
+                            id
+                        </th>
+                        <th>Node Name</th>
+                        <th>Port No</th>
+                        <th>System Name</th>
+                        <th>Action</th>
+                    </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="record:${records}">
+                      <td th:text="${record.id}"></td>
+                        <td th:text="${record.nodename}"></td>
+                          <td th:text="${record.portno}"></td>
+                            <td th:text="${record.systemname}"></td>
+                            <td><a th:href="'/node/delete/'+${record.id}" onclick="return confirm('are you sure want to delete?')" id="delete-btn" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                                        <a th:href=" ' /node/edit/'+${record.id}" class="btn  btn-success">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                </a></td>
+                      
+                  </tr>
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+              </ul>
+            </div>
+          </div>
+<div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">NODES CONNECTION</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered table-hover table-striped">
+                  <thead><tr>
+                        <th>
+                            id
+                        </th>
+                        <th>Node Name</th>
+                        <th>Neighbor Node</th>
+                        <th>Cost</th>
+                        <th>Action</th>
+                    </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="record:${record2}">
+                      <td th:text="${record.id}"></td>
+                        <td th:text="${record.name}"></td>
+                          <td th:text="${record.neighbor}"></td>
+                            <td th:text="${record.cost}"></td>
+                            <td><a th:href="'/relation/delete/'+${record.id}" onclick="return confirm('are you sure want to delete?')" id="delete-btn" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                                        <a th:href=" ' /relation/edit/'+${record.id}" class="btn  btn-success">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                </a></td>
+                      
+                  </tr>
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+              </ul>
+            </div>
+          </div>
+<div th:include="/node/component/modal"></div>
+  <div th:include="/relation/component/connection"></div>  
+<div th:replace="shared/footer"></div>
+<script>
+    $(document).ready(function (){
+        $('#create-node').on('click',function (){
+           $('#form-modal').modal();
+        })
+       
+       $("#connection").on('click',function (){
+           $("#connection-modal").modal();
+       })
+        
+        $.get('/node/json',function (data){
+            console.log(data);
+            var $dropdown=$('select[name=name]');
+            $('<option/>').val('').html("Select Node").appendTo($dropdown);
+            $.each(data,function (index,row){
+                $('<option/>').val(row.nodename).html(row.nodename).appendTo($dropdown);
+            })
+        })
+         
+        
+    })
+    </script>

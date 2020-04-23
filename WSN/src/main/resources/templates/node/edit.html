@@ -1,0 +1,56 @@
+
+<!-- Modal -->
+<div th:replace="shared/header"></div>
+<div class="container">
+<div class="box box-danger">
+    <div class="text-center">
+    <h3>EDIT A NODE</h3>
+</div>
+            <div class="box-header with-border">
+              <h3 class="box-title">EDIT</h3>
+            </div>
+    <form role="form" class="edit-form" method="post" action="/node">
+            <div class="box-body">
+               
+              <div class="row">
+                  
+                <div class="col-xs-3">
+                     <label>Node Name</label>
+                     <input type="text" class="form-control" name="nodename" th:value="${records.nodename}" required>
+                </div>
+                  
+                <div class="col-xs-4">
+                     <label>Port No</label>
+                  <input type="text" class="form-control" name="portno" th:value="${records.portno}" required>
+                </div>
+                <div class="col-xs-5">
+                     <label>System Name</label>
+                  <input type="text" class="form-control" name="systemname" th:value="${records.systemname}" required>
+                </div>
+              </div>
+               
+                
+                <div class="modal-footer">
+                     <input type="hidden" th:name="id" th:value="${records.id}"/>
+         
+          <a href="/node" class="btn btn-success">Back</a>
+                    <button type="button" id="clear" class="btn btn-danger btn-clear">Clear</button>
+                    <button type="submit"  class="btn btn-primary">Save</button>
+                    
+      </div>
+            </div>
+            <!-- /.box-body -->
+           
+    </form>
+          </div>
+</div>
+<div th:replace="shared/footer"></div>
+
+<script>
+    
+    $(document).ready(function(){
+        $('.btn-clear').on('click',function (){
+            $('.edit-form').find('input').val('');
+        })
+    })
+    </script>
